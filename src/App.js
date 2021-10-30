@@ -1,15 +1,26 @@
-import { Route } from "react-router";
-import { Link } from "react-router-dom";
+import { makeStyles } from "@material-ui/core";
+import { Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 import { Header } from "./Components/Header";
 import { Home, Coins } from "./Pages";
 
 let App = () => {
+  const useStyles = makeStyles(() => ({
+    App: {
+      backgroundColor: "#14161a",
+      color: "white",
+      minHeight: "100vh",
+    },
+  }));
+  const classes = useStyles();
+
   return (
-    <div className="App">
+    <div className={classes.App}>
       <Header />
-      <Route path="/" component={Home} exact />
-      <Route path="/coins/:id" component={Coins} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/coins/:id" element={<Coins />} />
+      </Routes>
     </div>
   );
 };
