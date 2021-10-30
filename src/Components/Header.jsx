@@ -11,6 +11,7 @@ import {
   MenuItem,
 } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
+import { useCrypto } from "../Context/CurrencyContext";
 
 export let Header = () => {
   const useStyles = makeStyles(() => ({
@@ -32,6 +33,8 @@ export let Header = () => {
       type: "dark",
     },
   });
+  const { symbol, setCurrency, currency } = useCrypto();
+  console.log(currency, symbol);
   return (
     <ThemeProvider theme={darkTheme}>
       <AppBar color="transparent" position="static">
@@ -47,6 +50,8 @@ export let Header = () => {
                 height: 40,
                 marginRight: 15,
               }}
+              value={currency}
+              onChange={(e) => setCurrency(e.target.value)}
             >
               <MenuItem value={"INR"}>INR</MenuItem>
               <MenuItem value={"USD"}>USD</MenuItem>
