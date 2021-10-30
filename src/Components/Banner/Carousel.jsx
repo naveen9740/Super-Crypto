@@ -25,12 +25,14 @@ export const Carousel = () => {
   }));
   const classes = useStyles();
   const { currency, symbol } = useCrypto();
-  console.log({ currency });
 
   const fetchTrandingCoins = async () => {
-    const { data } = await axios.get(TrendingCoins(currency));
-    console.log(data);
-    setTrending(data);
+    try {
+      const { data } = await axios.get(TrendingCoins(currency));
+      setTrending(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
   const numberWithCommas = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -63,6 +65,15 @@ export const Carousel = () => {
       </Link>
     );
   });
+  const responsive = {
+    0: {
+      items: 1,
+    },
+    1024: {
+      items: 3,
+    },
+  };
+
   return (
     <div className={classes.carousel}>
       <AliceCarousel
@@ -72,7 +83,7 @@ export const Carousel = () => {
         animationDuration={1500}
         disableDotsControls
         // disableButtonsControls
-        responsive
+        responsive={responsive}
         autoPlay
         items={items}
       />
