@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
 import { CryptoContext } from "./Context/CurrencyContext";
+import "react-alice-carousel/lib/alice-carousel.css";
 
 ReactDOM.render(
   <React.StrictMode>
