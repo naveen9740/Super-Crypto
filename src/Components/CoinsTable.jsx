@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useCrypto } from "../../Context/CurrencyContext";
-import { CoinList } from "../../Config/api";
+import { useCrypto } from "../Context/CurrencyContext";
+import { CoinList } from "../Config/api";
 import {
   Container,
   createTheme,
