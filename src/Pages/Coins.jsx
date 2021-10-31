@@ -47,7 +47,7 @@ const Coins = () => {
       fontFamily: "Roboto",
       padding: 25,
       paddingBottom: 15,
-      textAlign: "justify",
+      textAlign: "center",
     },
     marketData: {
       alignSelf: "start",

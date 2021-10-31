@@ -92,7 +92,10 @@ export const CoinsTable = () => {
           />
           <TableContainer>
             {loading ? (
-              <LinearProgress style={{ backgroundColor: "gold" }} />
+              <>
+                <LinearProgress style={{ backgroundColor: "gold" }} />
+                <h2>Bad Internet</h2>
+              </>
             ) : (
               <>
                 <Table aria-label="simple table">
