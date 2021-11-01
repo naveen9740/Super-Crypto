@@ -13,6 +13,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useCrypto } from "../Context/CurrencyContext";
 import { AuthModel } from "./Authentication/AuthModel";
+import { UserSideBar } from "./Authentication/UserSideBar";
 
 export let Header = () => {
   const useStyles = makeStyles(() => ({
@@ -34,7 +35,7 @@ export let Header = () => {
       type: "dark",
     },
   });
-  const { symbol, setCurrency, currency } = useCrypto();
+  const { symbol, setCurrency, currency, user } = useCrypto();
   console.log(currency, symbol);
   return (
     <ThemeProvider theme={darkTheme}>
@@ -57,7 +58,7 @@ export let Header = () => {
               <MenuItem value={"INR"}>INR</MenuItem>
               <MenuItem value={"USD"}>USD</MenuItem>
             </Select>
-            <AuthModel />
+            {user ? <UserSideBar /> : <AuthModel />}
           </Toolbar>
         </Container>
       </AppBar>

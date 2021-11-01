@@ -1,12 +1,40 @@
+import { createUserWithEmailAndPassword } from "@firebase/auth";
 import { Box, Button, TextField } from "@material-ui/core";
 import { useState } from "react";
+import { useCrypto } from "../../Context/CurrencyContext";
+import { auth } from "../../firebase";
 
 export const SignUp = ({ handleClose }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
-  const handleSubmit = () => {};
+  const { setAlert } = useCrypto();
+  const handleSubmit = async () => {
+    if (password !== confirmPassword) {
+      setAlert({
+        open: true,
+        message: "Passwords do not Match",
+        type: "error",
+      });
+      return;
+    }
+    try {
+      const result = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      setAlert({
+        open: true,
+        message: `Sign Up Success. Welcome ${result.user.email}`,
+        type: "success",
+      });
+      handleClose();
+    } catch (error) {
+      console.log(error);
+      setAlert({ open: true, message: error.message, type: "error" });
+    }
+  };
   return (
     <>
       <Box
@@ -23,7 +51,7 @@ export const SignUp = ({ handleClose }) => {
         />
         <TextField
           variant="outlined"
-          type="email"
+          type="password"
           label="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -31,9 +59,9 @@ export const SignUp = ({ handleClose }) => {
         />
         <TextField
           variant="outlined"
-          type="Confirm Password"
-          label="Enter Email"
-          value={password}
+          type="password"
+          label="Confirm Password"
+          value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           fullWidth
         />
