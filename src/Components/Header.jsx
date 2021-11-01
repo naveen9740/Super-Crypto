@@ -12,6 +12,7 @@ import {
 } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import { useCrypto } from "../Context/CurrencyContext";
+import { AuthModel } from "./Authentication/AuthModel";
 
 export let Header = () => {
   const useStyles = makeStyles(() => ({
@@ -56,6 +57,7 @@ export let Header = () => {
               <MenuItem value={"INR"}>INR</MenuItem>
               <MenuItem value={"USD"}>USD</MenuItem>
             </Select>
+            <AuthModel />
           </Toolbar>
         </Container>
       </AppBar>
