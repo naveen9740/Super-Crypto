@@ -4,12 +4,14 @@ import Drawer from "@material-ui/core/Drawer";
 import Button from "@material-ui/core/Button";
 import { useCrypto } from "../../Context/CurrencyContext";
 import { Avatar } from "@material-ui/core";
+import { signOut } from "@firebase/auth";
+import { auth } from "../../firebase";
 
 export const UserSideBar = () => {
   const [state, setState] = useState({
     right: false,
   });
-  const { user } = useCrypto();
+  const { user, setAlert } = useCrypto();
 
   const useStyles = makeStyles({
     list: {
@@ -73,7 +75,11 @@ export const UserSideBar = () => {
     setState({ ...state, [anchor]: open });
   };
 
-  const logOut = () => {};
+  const logOut = () => {
+    signOut(auth);
+    setAlert({ open: true, message: `You are Logged Out` });
+    toggleDrawer();
+  };
 
   return (
     <div>
