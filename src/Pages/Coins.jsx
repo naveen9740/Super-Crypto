@@ -1,4 +1,9 @@
-import { LinearProgress, makeStyles, Typography } from "@material-ui/core";
+import {
+  Button,
+  LinearProgress,
+  makeStyles,
+  Typography,
+} from "@material-ui/core";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
@@ -6,10 +11,12 @@ import { SingleCoin } from "../Config/api";
 import { useCrypto } from "../Context/CurrencyContext";
 import { CoinInfo } from "../Components/CoinInfo";
 import ReactHtmlParser from "react-html-parser";
+import { doc, setDoc } from "@firebase/firestore";
+import { db } from "../firebase";
 
 const Coins = () => {
   const { id } = useParams();
-  const { currency, symbol } = useCrypto();
+  const { currency, symbol, user, watchList, setAlert } = useCrypto();
   const [coin, setCoin] = useState();
 
   useEffect(() => {
@@ -54,12 +61,14 @@ const Coins = () => {
       padding: 23,
       paddingTop: 10,
       width: "100%",
+      [theme.breakpoints.down("sm")]: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      },
       [theme.breakpoints.down("md")]: {
         display: "flex",
-        justifyContent: "space-around",
-      },
-      [theme.breakpoints.down("sm")]: {
-        flexDirection: "column",
+        justifyContent: "column",
         alignItems: "center",
       },
       [theme.breakpoints.down("xs")]: {
@@ -69,6 +78,30 @@ const Coins = () => {
   }));
   const classes = useStyles();
   if (!coin) return <LinearProgress style={{ backgroundColor: "gold" }} />;
+
+  const inWatchList = watchList.includes(coin?.id);
+
+  const addToWatchList = async () => {
+    const coinRef = doc(db, "watchList", user.uid);
+    try {
+      await setDoc(coinRef, {
+        coins: watchList ? [...watchList, coin.id] : [coin?.id],
+      });
+
+      setAlert({
+        open: true,
+        message: `${coin.name} Added to WatchList`,
+        type: "success",
+      });
+    } catch (error) {
+      setAlert({
+        open: "true",
+        message: error.message,
+        type: "error",
+      });
+    }
+  };
+
   return (
     <div className={classes.container}>
       <div className={classes.sideBar}>
@@ -120,6 +153,19 @@ const Coins = () => {
               )}
             </Typography>
           </span>
+          {user && (
+            <Button
+              variant="outlined"
+              style={{
+                width: "100%",
+                height: 40,
+                backgroundColor: inWatchList ? `#ff0000` : `#EEBC1D`,
+              }}
+              onClick={addToWatchList}
+            >
+              {inWatchList ? `Remove from watchList` : `Add to WatchList`}
+            </Button>
+          )}
         </div>
       </div>
       <CoinInfo coin={coin} />

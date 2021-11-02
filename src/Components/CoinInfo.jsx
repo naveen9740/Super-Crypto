@@ -16,7 +16,6 @@ export const CoinInfo = ({ coin }) => {
   const [days, setDays] = useState(1);
 
   const { currency, symbol } = useCrypto();
-  console.log(historicData);
   useEffect(() => {
     (async () => {
       const { data } = await axios.get(
@@ -34,7 +33,6 @@ export const CoinInfo = ({ coin }) => {
       type: "dark",
     },
   });
-  console.log(historicData);
   const useStyles = makeStyles((theme) => ({
     container: {
       width: "75%",
