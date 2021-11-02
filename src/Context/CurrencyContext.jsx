@@ -19,11 +19,9 @@ export const CryptoContext = ({ children }) => {
     type: "success",
   });
   const [watchList, setWatchList] = useState([]);
-  console.log({ coins });
 
   useEffect(() => {
     if (user) {
-      console.log({ user });
       const coinRef = doc(db, "watchList", user.uid);
       var unsubscribe = onSnapshot(coinRef, (coin) =>
         coin.exists

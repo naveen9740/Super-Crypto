@@ -35,8 +35,7 @@ export let Header = () => {
       type: "dark",
     },
   });
-  const { symbol, setCurrency, currency, user } = useCrypto();
-  console.log(currency, symbol);
+  const { setCurrency, currency, user } = useCrypto();
   return (
     <ThemeProvider theme={darkTheme}>
       <AppBar color="transparent" position="static">

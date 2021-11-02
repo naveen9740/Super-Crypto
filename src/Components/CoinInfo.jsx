@@ -15,7 +15,7 @@ export const CoinInfo = ({ coin }) => {
   const [historicData, setHistoricData] = useState();
   const [days, setDays] = useState(1);
 
-  const { currency, symbol } = useCrypto();
+  const { currency } = useCrypto();
   useEffect(() => {
     (async () => {
       const { data } = await axios.get(

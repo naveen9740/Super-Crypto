@@ -14,7 +14,6 @@ export const UserSideBar = () => {
     right: false,
   });
   const { user, setAlert, watchList, coins, symbol } = useCrypto();
-  console.log({ coins });
 
   const useStyles = makeStyles({
     list: {
@@ -100,7 +99,7 @@ export const UserSideBar = () => {
       await setDoc(
         coinRef,
         {
-          coins: watchList.filter((item) => item != coin?.id),
+          coins: watchList.filter((item) => item !== coin?.id),
         },
         { merge: "true" }
       );
@@ -166,7 +165,7 @@ export const UserSideBar = () => {
                   {coins.map((coin) => {
                     if (watchList.includes(coin.id))
                       return (
-                        <div className={classes.coin}>
+                        <div className={classes.coin} key={coin.id}>
                           <span>{coin.name}</span>
                           <span style={{ display: "flex", gap: 8 }}>
                             {symbol}{" "}

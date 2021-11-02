@@ -108,7 +108,7 @@ const Coins = () => {
       await setDoc(
         coinRef,
         {
-          coins: watchList.filter((item) => item != coin?.id),
+          coins: watchList.filter((item) => item !== coin?.id),
         },
         { merge: "true" }
       );

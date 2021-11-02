@@ -9,7 +9,6 @@ import { SignUp } from "./SignUp";
 import GoogleButton from "react-google-button";
 import { GoogleAuthProvider, signInWithPopup } from "@firebase/auth";
 import { auth } from "../../firebase";
-import axios from "axios";
 import { useCrypto } from "../../Context/CurrencyContext";
 
 const useStyles = makeStyles((theme) => ({
@@ -48,7 +47,6 @@ export const AuthModel = () => {
   };
 
   const [value, setValue] = useState(0);
-  console.log(value);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
