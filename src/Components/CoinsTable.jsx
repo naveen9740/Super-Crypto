@@ -24,19 +24,9 @@ export const CoinsTable = () => {
   const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
-  const { currency, symbol } = useCrypto();
+  const { currency, symbol, coins, loading, fetchCoins } = useCrypto();
   const [page, setPage] = useState(1);
 
-  const fetchCoins = async () => {
-    try {
-      setLoading(true);
-      const { data } = await axios.get(CoinList(currency));
-      setCoins(data);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   useEffect(() => {
     fetchCoins();
   }, [currency]);

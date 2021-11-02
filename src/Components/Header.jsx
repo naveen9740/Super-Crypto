@@ -12,6 +12,8 @@ import {
 } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import { useCrypto } from "../Context/CurrencyContext";
+import { AuthModel } from "./Authentication/AuthModel";
+import { UserSideBar } from "./Authentication/UserSideBar";
 
 export let Header = () => {
   const useStyles = makeStyles(() => ({
@@ -33,8 +35,7 @@ export let Header = () => {
       type: "dark",
     },
   });
-  const { symbol, setCurrency, currency } = useCrypto();
-  console.log(currency, symbol);
+  const { setCurrency, currency, user } = useCrypto();
   return (
     <ThemeProvider theme={darkTheme}>
       <AppBar color="transparent" position="static">
@@ -56,6 +57,7 @@ export let Header = () => {
               <MenuItem value={"INR"}>INR</MenuItem>
               <MenuItem value={"USD"}>USD</MenuItem>
             </Select>
+            {user ? <UserSideBar /> : <AuthModel />}
           </Toolbar>
         </Container>
       </AppBar>
