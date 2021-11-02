@@ -19,6 +19,7 @@ export const CryptoContext = ({ children }) => {
     type: "success",
   });
   const [watchList, setWatchList] = useState([]);
+  console.log({ coins });
 
   useEffect(() => {
     if (user) {
@@ -36,10 +37,6 @@ export const CryptoContext = ({ children }) => {
       return () => unsubscribe();
     }
   }, [user]);
-  console.log({ watchList });
-  useEffect(() => {
-    currency === "INR" ? setSymbol("₹") : setSymbol("$");
-  }, [currency]);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -57,6 +54,14 @@ export const CryptoContext = ({ children }) => {
       console.log(error);
     }
   };
+  useEffect(() => {
+    if (currency === "INR") {
+      setSymbol("₹");
+    } else {
+      setSymbol("$");
+    }
+    fetchCoins();
+  }, [currency]);
 
   return (
     <Crypto.Provider

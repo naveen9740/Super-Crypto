@@ -102,6 +102,31 @@ const Coins = () => {
     }
   };
 
+  const removeFromWatchList = async () => {
+    const coinRef = doc(db, "watchList", user.uid);
+    try {
+      await setDoc(
+        coinRef,
+        {
+          coins: watchList.filter((item) => item != coin?.id),
+        },
+        { merge: "true" }
+      );
+
+      setAlert({
+        open: true,
+        message: `${coin.name} Removed from WatchList`,
+        type: "success",
+      });
+    } catch (error) {
+      setAlert({
+        open: "true",
+        message: error.message,
+        type: "error",
+      });
+    }
+  };
+
   return (
     <div className={classes.container}>
       <div className={classes.sideBar}>
@@ -161,7 +186,7 @@ const Coins = () => {
                 height: 40,
                 backgroundColor: inWatchList ? `#ff0000` : `#EEBC1D`,
               }}
-              onClick={addToWatchList}
+              onClick={inWatchList ? removeFromWatchList : addToWatchList}
             >
               {inWatchList ? `Remove from watchList` : `Add to WatchList`}
             </Button>

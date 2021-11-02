@@ -5,13 +5,16 @@ import Button from "@material-ui/core/Button";
 import { useCrypto } from "../../Context/CurrencyContext";
 import { Avatar } from "@material-ui/core";
 import { signOut } from "@firebase/auth";
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
+import { AiFillDelete } from "react-icons/ai";
+import { doc, setDoc } from "@firebase/firestore";
 
 export const UserSideBar = () => {
   const [state, setState] = useState({
     right: false,
   });
-  const { user, setAlert } = useCrypto();
+  const { user, setAlert, watchList, coins, symbol } = useCrypto();
+  console.log({ coins });
 
   const useStyles = makeStyles({
     list: {
@@ -62,6 +65,14 @@ export const UserSideBar = () => {
       gap: 12,
       overflowY: "scroll",
     },
+    coin: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      backgroundColor: "#EEBC1D",
+      color: "black",
+      padding: 10,
+    },
   });
   const classes = useStyles();
 
@@ -79,6 +90,33 @@ export const UserSideBar = () => {
     signOut(auth);
     setAlert({ open: true, message: `You are Logged Out` });
     toggleDrawer();
+  };
+  const numberWithCommas = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+  const removeFromWatchlist = async (coin) => {
+    const coinRef = doc(db, "watchList", user.uid);
+    try {
+      await setDoc(
+        coinRef,
+        {
+          coins: watchList.filter((item) => item != coin?.id),
+        },
+        { merge: "true" }
+      );
+
+      setAlert({
+        open: true,
+        message: `${coin.name} Removed from WatchList`,
+        type: "success",
+      });
+    } catch (error) {
+      setAlert({
+        open: "true",
+        message: error.message,
+        type: "error",
+      });
+    }
   };
 
   return (
@@ -124,6 +162,25 @@ export const UserSideBar = () => {
                   <span style={{ fontSize: 15, textShadow: "0 0 5px black" }}>
                     WatchList
                   </span>
+
+                  {coins.map((coin) => {
+                    if (watchList.includes(coin.id))
+                      return (
+                        <div className={classes.coin}>
+                          <span>{coin.name}</span>
+                          <span style={{ display: "flex", gap: 8 }}>
+                            {symbol}{" "}
+                            {numberWithCommas(coin.current_price.toFixed(2))}
+                            <AiFillDelete
+                              style={{ cursor: "pointer" }}
+                              fontSize="16"
+                              onClick={() => removeFromWatchlist(coin)}
+                            />
+                          </span>
+                        </div>
+                      );
+                    else return <></>;
+                  })}
                 </div>
               </div>
 
