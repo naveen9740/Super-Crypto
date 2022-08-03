@@ -79,13 +79,13 @@ const Coins = () => {
   const classes = useStyles();
   if (!coin) return <LinearProgress style={{ backgroundColor: "gold" }} />;
 
-  const inWatchList = watchList.includes(coin?.id);
+  const inWatchList = watchList?.includes(coin?.id);
 
   const addToWatchList = async () => {
     const coinRef = doc(db, "watchList", user.uid);
     try {
       await setDoc(coinRef, {
-        coins: watchList ? [...watchList, coin.id] : [coin?.id],
+        coins: watchList ? [...watchList, coin?.id] : [coin?.id],
       });
 
       setAlert({

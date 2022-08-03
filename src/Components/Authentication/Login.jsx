@@ -52,6 +52,17 @@ export const Login = ({ handleClose }) => {
           onChange={(e) => setPassword(e.target.value)}
           fullWidth
         />
+        <Button
+          variant="outlined"
+          size="large"
+          style={{ backgroundColor: "black" }}
+          onClick={() => {
+            setEmail("admin@gmail.com");
+            setPassword("admin123");
+          }}
+        >
+          Sign Up with Test Credentials
+        </Button>
 
         <Button
           variant="outlined"

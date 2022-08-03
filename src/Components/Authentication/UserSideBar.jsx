@@ -162,14 +162,14 @@ export const UserSideBar = () => {
                     WatchList
                   </span>
 
-                  {coins.map((coin) => {
-                    if (watchList.includes(coin.id))
+                  {coins?.map((coin) => {
+                    if (watchList?.includes(coin?.id))
                       return (
-                        <div className={classes.coin} key={coin.id}>
-                          <span>{coin.name}</span>
+                        <div className={classes.coin} key={coin?.id}>
+                          <span>{coin?.name}</span>
                           <span style={{ display: "flex", gap: 8 }}>
                             {symbol}{" "}
-                            {numberWithCommas(coin.current_price.toFixed(2))}
+                            {numberWithCommas(coin?.current_price.toFixed(2))}
                             <AiFillDelete
                               style={{ cursor: "pointer" }}
                               fontSize="16"

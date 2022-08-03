@@ -24,8 +24,8 @@ export const CryptoContext = ({ children }) => {
     if (user) {
       const coinRef = doc(db, "watchList", user.uid);
       var unsubscribe = onSnapshot(coinRef, (coin) =>
-        coin.exists
-          ? setWatchList(coin.data().coins)
+        coin?.exists
+          ? setWatchList(coin?.data()?.coins)
           : setAlert({
               open: true,
               messge: "No items Available in WatchList",
